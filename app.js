@@ -1,23 +1,35 @@
-import React from 'react';
-import {Text, View} from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import {SwitchNavigator} from 'react-navigation';
+import React, {Component} from 'react';
+import {View} from 'react-native';
 
-import FreePlayScreen from './screens/free_play';
-import ProfilesScreen from './screens/profiles';
-import QuestScreen from './screens/quest';
-import QuizScreen from './screens/quiz';
-import ResourcesScreen from './screens/resources';
-import TutorialScreen from './screens/tutorial';
+import ProfilesContainer from './src/containers/ProfilesContainer.js';
 
+import {
+    Router,
+    Scene
+} from 'react-native-router-flux'
 
-export default SwitchNavigator({
-    Profiles: ProfilesScreen,
-    Tutorial: TutorialScreen,
-    Quiz: QuizScreen,
-    "Free Play": FreePlayScreen,
-    Quest: QuestScreen,
-    Resources: ResourcesScreen
-}, {
+import {
+    connect,
+    Provider,
+} from 'react-redux';
 
-});
+import configureStore from './src/store/configureStore';
+
+const store = configureStore();
+const ConnectedRouter = connect()(Router);
+
+export default class App extends Component{
+    render(){
+	return(
+	    <Provider store={store}>
+		<View style={{height: 300}}>
+		    <ConnectedRouter>
+			<Scene key='root'>
+			    <Scene key='profiles' component={ProfilesContainer} hideNavBar={true} initial />
+			</Scene>
+		    </ConnectedRouter>
+		</View>
+	    </Provider>
+	);
+    }
+}
