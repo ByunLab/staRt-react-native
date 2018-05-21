@@ -5,7 +5,6 @@ import {
 } from 'react-native'
 import SideBar from '../components/sidebar';
 import ScreenHeader from '../components/screen-header';
-import {ParticipantsList, ParticipantProfile} from '../screens/profiles/participants';
 import style from './style'
 import {
     StyleSheet

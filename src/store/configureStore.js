@@ -27,10 +27,14 @@ const rrfConfig = {
     useFirestoreForProfile: true,
 }
 
+const firestoreSettings = {
+    timestampsInSnapshots: true
+};
+
 firebase.initializeApp(firebaseConfig);
 
 firebase.firestore();
-
+firebase.firestore().settings(firestoreSettings);
 
 const loggerMiddleware = createLogger({predicate: (getState, action) => __DEV__});
 

@@ -13,12 +13,13 @@ export default StyleSheet.create({
 	display: 'flex',
 	flexDirection: 'column',
     },
+
     button: {
-	flex: 1,
 	minHeight: 30,
 	padding: 10,
 	backgroundColor: '#53c8e9'
     },
+
     buttonText: {
 	color: '#fff'
     },

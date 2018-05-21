@@ -11,16 +11,30 @@ import {
 import {connect} from 'react-redux';
 
 import LoginForm from '../components/login-form';
+import SignupForm from '../components/signup-form';
 
 import {setEnv} from '../actions';
+import SegmentedControlTab from 'react-native-segmented-control-tab';
+
+const tabs = ['login', 'signup'];
+
 
 class UserContainer extends React.Component {
     constructor(props){
 	super(props);
+	this.state = {
+	    currentTabIndex: 0
+	}
+    }
+
+    handleSegmentChange = (index) => {
+	this.setState({
+	    currentTabIndex: index
+	});
     }
     
     render(){
-	let renderload = LoginForm;
+	var renderload;
 	switch(this.props.auth.isAuthed){
 	    case null:
 		// auth state is unknown
@@ -28,7 +42,15 @@ class UserContainer extends React.Component {
 		break;
 	    case false:
 		// user is known not to be authed
-		renderload = LoginForm;
+		let form = tabs[this.state.currentTabIndex] == 'login' ? <LoginForm /> : <SignupForm />;
+		renderload = <View>
+		    <SegmentedControlTab
+			values={['login', 'signup']}
+			selectedIndex={this.state.currentTabIndex}
+			onTabPress={this.handleSegmentChange}
+		    />
+		    {form}
+		</View>;
 		break;
 	    case true:
 		// user is known to be authed
@@ -37,12 +59,8 @@ class UserContainer extends React.Component {
 	    default:
 		// do something?
 	}
-	
-      return (
-	  <View style={style.wrapper}>
-	      <LoginForm></LoginForm>
-	  </View>
-      );
+
+	return renderload;
     }
 }
 

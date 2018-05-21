@@ -14,7 +14,8 @@ const Form = t.form.Form;
 
 const User = t.struct({
     email: t.String,
-    password: t.String
+    password: t.String,
+    confirmPassword: t.String
 });
 
 const options = {
@@ -25,67 +26,58 @@ const options = {
 	password: {
 	    password: true,
 	    secureTextEntry: true
+	},
+	confirmPassword: {
+	    password: true,
+	    secureTextEntry: true
 	}
     }
 };
 
 const defaultValues = {
-    email: 'jon@sharebyteaching.org',
-    password: 'ragnorak'
+    email: "jon@sharebyteaching.org",
+    password: 'ragnorak',
+    confirmPassword: 'ragnorak'
 }
 
-class LoginForm extends React.Component{
+class SignupForm extends React.Component{
     constructor(props){
 	super(props);
 	this.state = {
 	    email: '',
-	    password: ''
+	    password: '',
+	    confirmPassword: '',
 	};
     }
     
     render(){
 	return (
-	    <View style={{flex: 1}}>
+	    <View>
 		<Form    
-		    ref="loginForm"
+		    ref="form"
 		    type={User}
 		    value={defaultValues}
 		    options={options} />
 		<TouchableHighlight style={style.button}
-				    onPress={() => {this.handleLogin()}}
+				    onPress={() => {this.handleSignup()}}
 				    underlayColor='#99d9f4'>
-		    <Text style={style.buttonText}>Login</Text>
+		    <Text style={style.buttonText}>Signup</Text>
 		</TouchableHighlight>
 	    </View>
 	);
     }
     
-    handleLogin(){
+    handleSignup(){
 	var user = this.refs.form.getValue();
-	
-	firebase.auth().signInWithEmailAndPassword(
-	    user.email,
-	    user.password
-	).then(() => {
+	firebase.auth()
+		.createUserWithEmailAndPassword(user.email, user.password)
+		.then(() => {
 
-	}).catch((error) => {
-	    switch(error.code){
-		case "auth/network-request-failed":
-
-		    break;
-		case "auth/user-disabled":
-
-		    break;
-		case "auth/user-not-found":
-		    
-		    break;
-		default:
-
-		    break;
-	    }
-	    alert(JSON.stringify(error));
-	});
+		})
+		.catch((error) => {
+		    alert(error.message);
+		});
     }
 
 }
-export default LoginForm;
+export default SignupForm;
