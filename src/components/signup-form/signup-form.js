@@ -54,7 +54,7 @@ class SignupForm extends React.Component{
 	return (
 	    <View>
 		<Form    
-		    ref="form"
+		    ref="signupForm"
 		    type={User}
 		    value={defaultValues}
 		    options={options} />
@@ -68,7 +68,7 @@ class SignupForm extends React.Component{
     }
     
     handleSignup(){
-	var user = this.refs.form.getValue();
+	var user = this.refs.signupForm.getValue();
 	firebase.auth()
 		.createUserWithEmailAndPassword(user.email, user.password)
 		.then(() => {

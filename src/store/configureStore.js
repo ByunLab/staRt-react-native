@@ -35,6 +35,7 @@ firebase.initializeApp(firebaseConfig);
 
 firebase.firestore();
 firebase.firestore().settings(firestoreSettings);
+firebase.firestore.setLogLevel('debug')
 
 const loggerMiddleware = createLogger({predicate: (getState, action) => __DEV__});
 

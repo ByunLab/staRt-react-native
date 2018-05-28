@@ -14,12 +14,17 @@ import UserContainer from './UserContainer';
 import {connect} from 'react-redux';
 
 class ProfilesContainer extends React.Component {
+
+    constructor(props){
+	super(props);
+    }
+    
   render() {
       /*
 	 <ParticipantsList style={profileStyle.item}></ParticipantsList>
 	 <ParticipantProfile style={profileStyle.item}></ParticipantProfile>
       */
-
+      
       return (
 	  <View style={style.wrapper}>
 	      <SideBar></SideBar>
@@ -47,5 +52,4 @@ const profileStyle = StyleSheet.create({
     }
 });
 
-export default connect(({}) => ({}))(ProfilesContainer);
-
+export default connect()(ProfilesContainer);

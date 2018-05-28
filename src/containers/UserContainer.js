@@ -10,10 +10,16 @@ import {
 } from 'react-native';
 import {connect} from 'react-redux';
 
+import {
+    login,
+    logout,
+} from '../actions';
+
 import LoginForm from '../components/login-form';
 import SignupForm from '../components/signup-form';
 
-import {setEnv} from '../actions';
+import ProfileControl from '../components/profile-control';
+
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
 const tabs = ['login', 'signup'];
@@ -24,7 +30,7 @@ class UserContainer extends React.Component {
 	super(props);
 	this.state = {
 	    currentTabIndex: 0
-	}
+	};
     }
 
     handleSegmentChange = (index) => {
@@ -35,7 +41,7 @@ class UserContainer extends React.Component {
     
     render(){
 	var renderload;
-	switch(this.props.auth.isAuthed){
+	switch(this.props.user.isAuthed){
 	    case null:
 		// auth state is unknown
 		
@@ -54,7 +60,7 @@ class UserContainer extends React.Component {
 		break;
 	    case true:
 		// user is known to be authed
-
+		renderload = <ProfileControl />
 		break;
 	    default:
 		// do something?
@@ -76,4 +82,14 @@ const profileStyle = StyleSheet.create({
 });
 
 
-export default connect(({auth, routes, environment}) => ({auth, routes, environment}))(UserContainer);
+const mapStateToProps = state => ({
+    user: state.user,
+    routes: state.routes,
+    environment: state.environment
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+});
+
+export default connect(mapStateToProps)(UserContainer);

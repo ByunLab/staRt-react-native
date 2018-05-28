@@ -61,12 +61,13 @@ class LoginForm extends React.Component{
     }
     
     handleLogin(){
-	var user = this.refs.form.getValue();
+	var user = this.refs.loginForm.getValue();
 	
 	firebase.auth().signInWithEmailAndPassword(
 	    user.email,
 	    user.password
-	).then(() => {
+	).then((data) => {
+	    this.props.login(data);
 
 	}).catch((error) => {
 	    switch(error.code){
@@ -83,7 +84,7 @@ class LoginForm extends React.Component{
 
 		    break;
 	    }
-	    alert(JSON.stringify(error));
+	    // alert(JSON.stringify(error));
 	});
     }
 
